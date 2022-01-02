@@ -1,4 +1,4 @@
-package com.nubari.favdish.ui.notifications
+package com.nubari.favdish.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

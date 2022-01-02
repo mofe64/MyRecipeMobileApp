@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/activity_main.xml" value="0.1334853090172239" />
+        <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/activity_splash.xml" value="0.176" />
+        <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/fragment_dashboard.xml" value="0.1" />
+        <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20185185185185187" />
       </map>
     </option>
