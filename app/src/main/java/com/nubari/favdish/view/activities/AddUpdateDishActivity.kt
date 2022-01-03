@@ -29,6 +29,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -42,6 +43,9 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
+import com.nubari.favdish.databinding.DialogCustomListBinding
+import com.nubari.favdish.utils.Constants
+import com.nubari.favdish.view.adapters.CustomListItemAdapter
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -53,12 +57,17 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var startCameraActivity: ActivityResultLauncher<Intent>
     private lateinit var startGalleryActivity: ActivityResultLauncher<String>
     private var mImagePath: String = ""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityAddUpdateDishBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         setupActionBar()
         mBinding.imageViewAddDishImage.setOnClickListener(this)
+        mBinding.editTextType.setOnClickListener(this)
+        mBinding.etCategory.setOnClickListener(this)
+        mBinding.etCookingTime.setOnClickListener(this)
         // Note this camera activity used the generic activity call contract
         // takes a raw intent as input and activity result as output
         // No type conversion is carried out so we have to do it manually
@@ -141,6 +150,31 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
             when (v.id) {
                 R.id.imageView_add_dish_image -> {
                     customImageSelectionDialog()
+                    return
+                }
+                R.id.edit_text_type -> {
+                    customItemsDialog(
+                        resources.getString(R.string.title_select_dish_type),
+                        Constants.dishTypes(),
+                        Constants.DISH_TYPE
+                    )
+                    return
+                }
+                R.id.et_category -> {
+                    customItemsDialog(
+                        resources.getString(R.string.title_select_dish_category),
+                        Constants.dishCategories(),
+                        Constants.DISH_CATEGORY
+                    )
+                    return
+                }
+                R.id.et_cooking_time -> {
+                    customItemsDialog(
+                        resources.getString(R.string.title_select_dish_time),
+                        Constants.dishCookingTime(),
+                        Constants.DISH_COOKING_TIME
+                    )
+
                 }
             }
         }
@@ -260,6 +294,17 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
             e.printStackTrace()
         }
         return file.absolutePath
+    }
+
+    private fun customItemsDialog(title: String, itemsList: List<String>, selection: String) {
+        val customListDialog = Dialog(this)
+        val binding: DialogCustomListBinding = DialogCustomListBinding.inflate(layoutInflater)
+        customListDialog.setContentView(binding.root)
+        binding.tvDialogTitle.text = title
+        binding.rvList.layoutManager = LinearLayoutManager(this)
+        val adapter = CustomListItemAdapter(this, itemsList, selection)
+        binding.rvList.adapter = adapter
+        customListDialog.show()
     }
 
     companion object {
