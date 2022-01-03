@@ -4,4 +4,14 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="splash_screen_title">Mofe</string>
+    <string name="add_dish">Add Dish</string>
+    <string name="add_dish_banner_image">Add Dish Banner</string>
+    <string name="add_dish_image_icon">Add Dish Image</string>
+    <string name="lbl_title">Title</string>
+    <string name="lbl_type">Type</string>
+    <string name="lbl_category">Category</string>
+    <string name="lbl_ingredients">Ingredients</string>
+    <string name="lbl_cooking_time_in_minutes">Cooking Time In Minutes</string>
+    <string name="lbl_direction_to_cook">Direction To Cook</string>
+    <string name="lbl_add_dish">Add Dish</string>
 </resources>
