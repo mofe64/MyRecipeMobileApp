@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">FavDish</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_all_dishes">All Dishes</string>
+    <string name="title_favorite_dishes">Favorite</string>
+    <string name="title_random_dish">Random Dish</string>
     <string name="splash_screen_title">Mofe</string>
     <string name="add_dish">Add Dish</string>
     <string name="add_dish_banner_image">Add Dish Banner</string>
     <string name="add_dish_image_icon">Add Dish Image</string>
+    <string name="image_contentDescription">Dish Image</string>
     <string name="lbl_title">Title</string>
     <string name="lbl_type">Type</string>
     <string name="lbl_category">Category</string>
@@ -28,4 +29,5 @@
     <string name="err_msg_select_dish_ingredients">Enter Dish Ingredients</string>
     <string name="err_msg_select_dish_cooking_time">Select Dish Cooking Time</string>
     <string name="err_msg_select_dish_cooking_instructions">Enter Dish Cooking Instructions</string>
+    <string name="label_no_dishes_added_yet">No Dishes added yet</string>
 </resources>

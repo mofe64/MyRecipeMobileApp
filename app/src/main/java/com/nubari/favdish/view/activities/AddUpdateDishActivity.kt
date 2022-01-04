@@ -9,7 +9,6 @@ import com.karumi.dexter.Dexter
 import com.nubari.favdish.databinding.ActivityAddUpdateDishBinding
 import com.nubari.favdish.databinding.DialogCustomImageSelectionBinding
 import android.Manifest
-import android.Manifest.permission.CAMERA
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
@@ -18,7 +17,6 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.media.audiofx.Equalizer
 import android.net.Uri
 import android.provider.MediaStore
 import android.provider.Settings
@@ -28,6 +26,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,9 +43,13 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
+import com.nubari.favdish.application.FavDishApplication
 import com.nubari.favdish.databinding.DialogCustomListBinding
+import com.nubari.favdish.model.entities.FavDIsh
 import com.nubari.favdish.utils.Constants
 import com.nubari.favdish.view.adapters.CustomListItemAdapter
+import com.nubari.favdish.viewmodel.FavDishViewModel
+import com.nubari.favdish.viewmodel.FavDishViewModelFactory
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -57,8 +60,21 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mBinding: ActivityAddUpdateDishBinding
     private lateinit var startCameraActivity: ActivityResultLauncher<Intent>
     private lateinit var startGalleryActivity: ActivityResultLauncher<String>
+
+    // A global variable for stored image path.
     private var mImagePath: String = ""
+
+    // A global variable for the custom list dialog.
     private lateinit var mCustomListDialog: Dialog
+
+    /**
+     * To create the ViewModel we used the viewModels delegate, passing in an instance of our FavDishViewModelFactory.
+     * This is constructed based on the repository retrieved from the FavDishApplication.
+     * Because our view model requires a repository to be created
+     */
+    private val mFavDishViewModel: FavDishViewModel by viewModels {
+        FavDishViewModelFactory((application as FavDishApplication).repository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -238,13 +254,27 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
                             ).show()
                         }
                         else -> {
+                            val favDishDetails = FavDIsh(
+                                mImagePath,
+                                Constants.DISH_IMAGE_SOURCE_LOCAL,
+                                title,
+                                type,
+                                category,
+                                ingredients,
+                                cookingTimeInMinutes,
+                                cookingDirection,
+                                false
+                            )
+                            mFavDishViewModel.insert(favDishDetails)
                             Toast.makeText(
                                 this@AddUpdateDishActivity,
-                                "All Good",
+                                "Dish Details added successfully",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            Log.i("Insertion", "success")
+                            //finish the activity
+                            finish()
                         }
-
                     }
 
                 }
@@ -270,6 +300,9 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    /**
+     * A function to launch the custom image selection dialog.
+     */
     private fun customImageSelectionDialog() {
         // create dialog obj
         val dialog = Dialog(this)
@@ -335,6 +368,9 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
         dialog.show()
     }
 
+    /**
+     * A function used to show the alert dialog when the permissions are denied and need to allow it from settings app info.
+     */
     private fun showRationalDialogForPermissions() {
         AlertDialog.Builder(this).setMessage(
             "Looks like you turned off permissions " +
@@ -365,6 +401,11 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
         startGalleryActivity.launch("image/*")
     }
 
+    /**
+     * A function to save a copy of an image to internal storage for FavDishApp to use.
+     *
+     * @param bitmap
+     */
     private fun saveImageToInternalStorage(bitmap: Bitmap): String {
         // context wrapper is used to identify which application the file to be saved
         // originated from

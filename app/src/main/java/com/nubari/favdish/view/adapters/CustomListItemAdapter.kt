@@ -20,6 +20,12 @@ class CustomListItemAdapter(
     }
 
     //called once view holder is created
+    /**
+     * Inflates the item views which is designed in xml layout file
+     *
+     * create a new
+     * {@link ViewHolder} and initializes some private fields to be used by RecyclerView.
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // our item custom list binding is the binding obj for the item custom list
         // layout which specifies how each item in recycler view is supposed to
@@ -37,6 +43,16 @@ class CustomListItemAdapter(
 
     // called for every single item in recycler view
     // basically used to bind data to the view holder
+    /**
+     * Binds each item in the ArrayList to a view
+     *
+     * Called when RecyclerView needs a new {@link ViewHolder} of the given type to represent
+     * an item.
+     *
+     * This new ViewHolder should be constructed with a new View that can represent the items
+     * of the given type. You can either create a new View manually or inflate it from an XML
+     * layout file.
+     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = listItems[position]
         holder.tvText.text = item
