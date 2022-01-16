@@ -86,6 +86,7 @@ class AllDishesFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add_dish -> {
+
                 val addDishIntent: Intent = Intent(
                     // fragments don't have a context, so we get the parent
                     // activity it is attached to then use that as our ctx

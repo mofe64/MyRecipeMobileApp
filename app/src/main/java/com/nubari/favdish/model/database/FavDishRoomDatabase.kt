@@ -6,8 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.nubari.favdish.model.entities.FavDIsh
 /**
-* This is the backend. The database. This used to be done by the OpenHelper.
-* The fact that this has very few comments emphasizes its coolness.
+* This is the backend. The database.
 */
 @Database(entities = [FavDIsh::class], version = 1, exportSchema = false)
 abstract class FavDishRoomDatabase : RoomDatabase() {
