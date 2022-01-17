@@ -1,8 +1,6 @@
 package com.nubari.favdish.model.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.nubari.favdish.model.entities.FavDIsh
 import kotlinx.coroutines.flow.Flow
 
@@ -40,4 +38,13 @@ interface FavDishDao {
     @Query("SELECT * FROM FAV_DISHES_TABLE ORDER BY ID")
     fun getAllDishesList(): Flow<List<FavDIsh>>
 
+    @Update
+    suspend fun updateFavDishDetails(favDish: FavDIsh)
+
+    @Query("SELECT * FROM FAV_DISHES_TABLE WHERE favorite_dish = 1")
+    fun getFavs(): Flow<List<FavDIsh>>
+
+
+    @Delete
+    suspend fun delete(favDish: FavDIsh)
 }

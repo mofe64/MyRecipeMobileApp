@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/drawable/favorite_button_background.xml" value="0.1935185185185185" />
+        <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/drawable/ic_more.xml" value="0.1962962962962963" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/drawable/ic_vector_gallery.xml" value="0.17222222222222222" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/drawable/ic_vector_photo_camera.xml" value="0.17222222222222222" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/activity_add_update_dish.xml" value="0.264" />
@@ -18,6 +20,7 @@
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/item_dish_layout.xml" value="0.1334853090172239" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/test.xml" value="0.2" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20185185185185187" />
+        <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/menu/menu_adapter.xml" value="0.25833333333333336" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/menu/menu_all_dishes.xml" value="0.13148148148148148" />
       </map>
     </option>

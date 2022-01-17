@@ -1,9 +1,12 @@
 package com.nubari.favdish.model.entities
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize // annotation which makes sure our entity can be parcelized requires the kotlin parcelize plugin
 @Entity(tableName = "fav_dishes_table")
 data class FavDIsh(
     @ColumnInfo val image: String,
@@ -14,6 +17,6 @@ data class FavDIsh(
     @ColumnInfo val ingredients: String,
     @ColumnInfo(name = "cooking_time") val cookingTime: String,
     @ColumnInfo(name = "instructions") val directionToCook: String,
-    @ColumnInfo(name = "favorite_dish") val favoriteDish: Boolean = false,
+    @ColumnInfo(name = "favorite_dish") var favoriteDish: Boolean = false,
     @PrimaryKey(autoGenerate = true) val id: Int = 0
-)
+) : Parcelable

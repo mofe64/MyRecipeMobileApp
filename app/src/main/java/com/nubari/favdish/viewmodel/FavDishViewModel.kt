@@ -21,12 +21,25 @@ class FavDishViewModel(private val repository: FavDishRepository) : ViewModel() 
     fun insert(dish: FavDIsh) = viewModelScope.launch {
         repository.insertFavDishData(dish)
     }
+
     /** Using LiveData and caching what allDishes returns has several benefits:
      * We can put an observer on the data (instead of polling for changes) and only
      * update the UI when the data actually changes.
      * Repository is completely separated from the UI through the ViewModel.
      */
     val allDishesList: LiveData<List<FavDIsh>> = repository.allDishesList.asLiveData()
+
+    val favDishesList: LiveData<List<FavDIsh>> = repository.favoriteDishes.asLiveData()
+
+    fun update(dish: FavDIsh) = viewModelScope.launch {
+        repository.updateDish(dish)
+    }
+
+    fun delete(dish: FavDIsh) {
+        viewModelScope.launch {
+            repository.delete(dish)
+        }
+    }
 }
 
 /**
