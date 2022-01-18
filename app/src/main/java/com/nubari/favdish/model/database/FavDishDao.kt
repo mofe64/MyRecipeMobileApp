@@ -44,6 +44,8 @@ interface FavDishDao {
     @Query("SELECT * FROM FAV_DISHES_TABLE WHERE favorite_dish = 1")
     fun getFavs(): Flow<List<FavDIsh>>
 
+    @Query("select * from fav_dishes_table where type = :filterType")
+    fun filter(filterType: String): Flow<List<FavDIsh>>
 
     @Delete
     suspend fun delete(favDish: FavDIsh)
