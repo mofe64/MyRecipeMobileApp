@@ -1,0 +1,58 @@
+package com.nubari.favdish.viewmodel
+
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.nubari.favdish.model.entities.RandomDish
+import com.nubari.favdish.model.network.RandomDishApiService
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.observers.DisposableSingleObserver
+import io.reactivex.rxjava3.schedulers.Schedulers
+
+class RandomDishViewModel : ViewModel(){
+    private val randomDishApiService = RandomDishApiService()
+
+    /**
+     * A disposable is a tool that can be used to control the
+     * life cycle of an observable
+     * **/
+    private val compositeDisposable = CompositeDisposable()
+
+    val loadRandomDish = MutableLiveData<Boolean>()
+    val randomDishResponse = MutableLiveData<RandomDish.Recipes>()
+    val randomDishLoadingError = MutableLiveData<Boolean>()
+
+
+    fun getRandomRecipeFromAPI() {
+        loadRandomDish.value = true
+
+        // our disposable will be use manage the
+        // observable
+        compositeDisposable.add(
+            randomDishApiService.getRandomDish()
+                    // we subscribe to this observable to a new thread
+                .subscribeOn(Schedulers.newThread())
+                    // we observe this operation on the main thread
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(
+                    object: DisposableSingleObserver<RandomDish.Recipes>(){
+                        override fun onSuccess(value: RandomDish.Recipes) {
+                            loadRandomDish.value = false
+                            randomDishResponse.value = value
+                            randomDishLoadingError.value = false
+                        }
+
+                        override fun onError(e: Throwable) {
+                            loadRandomDish.value = false
+                            randomDishLoadingError.value = true
+                            Log.e("error-txt", e.message.toString())
+                            e.printStackTrace()
+                        }
+
+                    }
+                )
+
+        )
+    }
+}

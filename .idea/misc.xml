@@ -14,16 +14,19 @@
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/activity_splash.xml" value="0.176" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/dialog_custom_image_selection.xml" value="0.10280797101449275" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/dialog_custom_list.xml" value="0.10507246376811594" />
+        <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/dialog_custom_progress.xml" value="0.12222222222222222" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/fragment_dashboard.xml" value="0.1" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/fragment_dish_details.xml" value="0.16983695652173914" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/fragment_notifications.xml" value="0.14479166666666668" />
+        <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/fragment_random_dish.xml" value="0.13333333333333333" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/item_custom_list.xml" value="0.10507246376811594" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/item_dish_layout.xml" value="0.1334853090172239" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/layout/test.xml" value="0.2" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20185185185185187" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/menu/menu_adapter.xml" value="0.25833333333333336" />
         <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/menu/menu_all_dishes.xml" value="0.1" />
+        <entry key="..\:/devStrawhat/Android/FavDish/app/src/main/res/menu/menu_share.xml" value="0.12222222222222222" />
       </map>
     </option>
   </component>

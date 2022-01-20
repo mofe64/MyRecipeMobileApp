@@ -17,7 +17,6 @@ import com.nubari.favdish.databinding.FragmentFavoriteDishesBinding
 import com.nubari.favdish.model.entities.FavDIsh
 import com.nubari.favdish.view.activities.MainActivity
 import com.nubari.favdish.view.adapters.FavDishAdapter
-import com.nubari.favdish.viewmodel.DashboardViewModel
 import com.nubari.favdish.viewmodel.FavDishViewModel
 import com.nubari.favdish.viewmodel.FavDishViewModelFactory
 

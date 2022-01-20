@@ -1,12 +1,13 @@
 package com.nubari.favdish.view.fragments
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
@@ -21,6 +22,8 @@ import com.bumptech.glide.request.target.Target
 import com.nubari.favdish.R
 import com.nubari.favdish.application.FavDishApplication
 import com.nubari.favdish.databinding.FragmentDishDetailsBinding
+import com.nubari.favdish.model.entities.FavDIsh
+import com.nubari.favdish.utils.Constants
 import com.nubari.favdish.viewmodel.FavDishViewModel
 import com.nubari.favdish.viewmodel.FavDishViewModelFactory
 import java.io.IOException
@@ -30,6 +33,7 @@ import java.util.*
 class DishDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDishDetailsBinding
+    private var details: FavDIsh? = null
     private val favDishViewModel: FavDishViewModel by viewModels {
         FavDishViewModelFactory(
             (requireActivity().application as FavDishApplication)
@@ -40,6 +44,53 @@ class DishDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // indicates that this frag will have an options menu
+        setHasOptionsMenu(true)
+    }
+
+    // we inflate the custom menu we created here
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_share, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    // we specify what should happen when a menu item is clicked here
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+
+        when (item.itemId) {
+            R.id.action_share_dish -> {
+                val type = "text/plain"
+                val subject = "Check this out"
+                var extraText = ""
+                val shareWith = "Share with"
+                details?.let {
+                    var image = ""
+                    if (it.imageSource == Constants.DISH_IMAGE_SOURCE_ONLINE) {
+                        image = it.image
+                    }
+                    var cookingInstructions = ""
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        cookingInstructions = Html.fromHtml(
+                            it.directionToCook,
+                            Html.FROM_HTML_MODE_COMPACT
+                        ).toString()
+                    } else {
+                        @Suppress("DEPRECATION")
+                        cookingInstructions = Html.fromHtml(it.directionToCook).toString()
+                    }
+                    extraText = "some text  \n$cookingInstructions"
+                }
+
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = type
+                intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+                intent.putExtra(Intent.EXTRA_TEXT, extraText)
+                startActivity(Intent.createChooser(intent, shareWith))
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onCreateView(
@@ -55,6 +106,7 @@ class DishDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val args: DishDetailsFragmentArgs by navArgs()
+        details = args.dishDetails
         args.let { it ->
             try {
                 Glide.with(requireActivity())

@@ -1,6 +1,7 @@
 package com.nubari.favdish.view.activities
 
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -9,8 +10,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.*
 import com.nubari.favdish.R
 import com.nubari.favdish.databinding.ActivityMainBinding
+import com.nubari.favdish.model.notification.NotificationWorker
+import com.nubari.favdish.utils.Constants
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,6 +42,11 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        if (intent.hasExtra(Constants.NOTIFICATION_ID)) {
+            val id = intent.getIntExtra(Constants.NOTIFICATION_ID, 0)
+            binding.navView.selectedItemId = R.id.navigation_random_dish
+        }
+        startWork()
     }
 
     /**
@@ -74,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         binding.navView.animate()
             .translationY(binding.navView.height.toFloat())
             .duration = 300
+        binding.navView.visibility = View.GONE
     }
 
     fun showBottomNavigationView() {
@@ -83,5 +94,28 @@ class MainActivity : AppCompatActivity() {
         binding.navView.animate()
             .translationY(0f)
             .duration = 300
+        binding.navView.visibility = View.VISIBLE
+    }
+
+    private fun createConstraints() = Constraints
+        .Builder()
+        .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
+        .setRequiresBatteryNotLow(true)
+        .setRequiresCharging(false)
+        .build()
+
+    private fun createWorkRequest() =
+        PeriodicWorkRequestBuilder<NotificationWorker>(
+            15, TimeUnit.MINUTES
+        ).setConstraints(createConstraints())
+            .build()
+
+    private fun startWork() {
+        WorkManager.getInstance(this)
+            .enqueueUniquePeriodicWork(
+                "fav dish notify work",
+                ExistingPeriodicWorkPolicy.KEEP,
+                createWorkRequest()
+            )
     }
 }

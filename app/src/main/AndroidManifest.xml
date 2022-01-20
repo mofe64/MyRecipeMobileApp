@@ -3,6 +3,7 @@
     package="com.nubari.favdish">
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name=".application.FavDishApplication"
         android:allowBackup="true"

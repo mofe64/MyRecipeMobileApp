@@ -25,7 +25,6 @@ import com.nubari.favdish.view.adapters.CustomListItemAdapter
 import com.nubari.favdish.view.adapters.FavDishAdapter
 import com.nubari.favdish.viewmodel.FavDishViewModel
 import com.nubari.favdish.viewmodel.FavDishViewModelFactory
-import com.nubari.favdish.viewmodel.HomeViewModel
 
 class AllDishesFragment : Fragment() {
 
